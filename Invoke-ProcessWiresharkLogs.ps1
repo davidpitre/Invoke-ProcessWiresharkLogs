@@ -113,7 +113,10 @@ function Check-DomainExclusion
 		[Parameter(Mandatory = $true)]
 		[string]$domain
 	)
-	BEGIN { }
+	BEGIN 
+	{
+		Write-Verbose -Message "Check-DomainExclusion: Begin"
+	}
 	PROCESS
 	{
 		# List of common CDNs that we are not interested in
@@ -184,7 +187,10 @@ function Check-DomainExclusion
 
 		return $false
 	}
-	END { }
+	END 
+	{
+		Write-Verbose -Message "Check-DomainExclusion: Begin"
+	}
 }
 
 function Get-VTDomainCategories
@@ -196,6 +202,7 @@ function Get-VTDomainCategories
 	
 	BEGIN
 	{
+		Write-Verbose -Message "Get-VTDomainCategories: Begin"
 		[string]$VTApiURL = "https://www.virustotal.com/vtapi/v2/domain/report?apikey={0}&domain={1}" -f $VTApiKey, $VTDomain
 	}
 	PROCESS
@@ -207,6 +214,7 @@ function Get-VTDomainCategories
 	END
 	{
 		Start-Sleep -Seconds 21 # Not very elegant solution I know, I hate using sleeps, I will incorporate a better mechanism to handle VT throttling in the future.
+		Write-Verbose -Message "Get-VTDomainCategories: Begin"
 	}
 }
 
@@ -214,6 +222,7 @@ function Invoke-EnrichDomainInfo
 {
 	BEGIN
 	{
+		Write-Verbose -Message "Invoke-EnrichDomainInfo: Begin"
 		$UniqueDNSCSV = Import-Csv -Path ([string]"C:\Source\uniquedns-{0}.csv" -f (Get-Date -Format "dMMyyyy"))
 		[array]$EnrichedDestinationData = $null
 	}
@@ -230,7 +239,10 @@ function Invoke-EnrichDomainInfo
 		}
 		return [array]$Global:EnrichedDestinationData
 	}
-	END { }
+	END 
+	{ 
+		Write-Verbose -Message "Invoke-EnrichDomainInfo: End"
+	}
 }
 
 Invoke-ProcessWireSharkLogs -dnsquery | Select-Object * -unique | Export-Csv -NoTypeInformation -NoClobber -Append -Path ([string]"C:\Source\uniquedns-{0}.csv" -f (Get-Date -Format "dMMyyyy"))
