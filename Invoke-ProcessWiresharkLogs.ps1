@@ -233,7 +233,6 @@ function Invoke-EnrichDomainInfo
 	END { }
 }
 
-Invoke-ProcessWireSharkLogs -dnsquery | Select-Object * -unique | Export-Csv -NoTypeInformation -NoClobber -Append `
-																			 -Path ([string]"C:\Source\uniquedns-{0}.csv" -f (Get-Date -Format "dMMyyyy"))
+Invoke-ProcessWireSharkLogs -dnsquery | Select-Object * -unique | Export-Csv -NoTypeInformation -NoClobber -Append -Path ([string]"C:\Source\uniquedns-{0}.csv" -f (Get-Date -Format "dMMyyyy"))
 
 Invoke-EnrichDomainInfo | Export-Csv -NoTypeInformation -NoClobber -Append -Path ([string]"C:\Source\uniquedns-enriched-{0}.csv" -f (Get-Date -Format "dMMyyyy"))
