@@ -206,7 +206,7 @@ function Get-VTDomainCategories
 	}
 	END
 	{
-		Start-Sleep -Seconds 21
+		Start-Sleep -Seconds 21 # Not very elegant solution I know, I hate using sleeps, I will incorporate a better mechanism to handle VT throttling in the future.
 	}
 }
 
